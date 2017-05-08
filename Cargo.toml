@@ -9,4 +9,4 @@ name = "rocket_cors"
 path = "src/lib.rs"
 
 [dependencies]
-rocket = "*"
+rocket = { git = "https://github.com/SergioBenitez/Rocket" }
