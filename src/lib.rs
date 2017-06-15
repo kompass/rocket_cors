@@ -2,6 +2,7 @@ extern crate rocket;
 
 use std::collections::HashSet;
 use rocket::response::{self, Response, Responder};
+use rocket::Request;
 use rocket::http::{Status, Method};
 
 /// The CORS type, which implements `Responder`. This type allows
@@ -112,8 +113,8 @@ impl<'r, R: Responder<'r>> CORS<R> {
 }
 
 impl <'r, R: Responder<'r>> Responder<'r> for CORS<R> {
-    fn respond(self) -> response::Result<'r> {
-        let mut response = Response::build_from(self.responder.respond()?)
+    fn respond_to(self, req: &Request) -> response::Result<'r> {
+        let mut response = Response::build_from(self.responder.respond_to(req)?)
             .raw_header("Access-Control-Allow-Origin", self.allow_origin)
             .finalize();
 
